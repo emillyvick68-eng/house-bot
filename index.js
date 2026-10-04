@@ -3,7 +3,7 @@ import makeWASocket, {
   DisconnectReason
 } from "@whiskeysockets/baileys";
 import P from "pino";
-
+import http from "node:http";
 async function iniciarBot() {
   const { state, saveCreds } = await useMultiFileAuthState("./auth");
 
@@ -86,3 +86,11 @@ async function iniciarBot() {
 }
 
 iniciarBot();
+const PORT = process.env.PORT || 10000;
+
+http.createServer((req, res) => {
+  res.writeHead(200, { "Content-Type": "text/plain" });
+  res.end("HOUSE BOT ONLINE 🤖");
+}).listen(PORT, "0.0.0.0", () => {
+  console.log(`🌐 Servidor HTTP na porta ${PORT}`);
+});
